@@ -11,17 +11,16 @@ private static final double DESC_VIP_EXTRA = 0.25;      // Descuento VIP con ben
 private static final double DESC_VIP_STANDAR = 0.15;    // Descuento VIP estándar
 private static final double DESC_CLIENTE_ESTANDAR = 0.05; // Descuento cliente estándar
 
-    // Método a refactorizar
     public double calcularTotalConDescuento(double importeBase, int tipoCliente, boolean esClienteVip) {
 
 
 
-        // Retorno temprano: importes no válidos
+        // Devuelve 0 si el importe base es negativo o cero
         if (importeBase <= 0) {
             return 0;
         }
 
-        // Aplicar descuento según tipo de cliente
+        // Depende del tipo de cliente devuelve un descuento u otro
         if (tipoCliente == 1) {
             return aplicarDescuentoClienteVip(importeBase, esClienteVip);
         }
@@ -30,12 +29,12 @@ private static final double DESC_CLIENTE_ESTANDAR = 0.05; // Descuento cliente e
             return aplicarDescuentoClienteEstandar(importeBase);
         }
 
-        // Cliente sin categoría conocida: sin descuento
+        // Si el cliente no tiene categoría conocida, no se aplica descuento
         return importeBase;
     }
 
     /**
-     * Aplica el descuento correspondiente para clientes VIP.
+     * Aplica el descuento correspondiente para los clientes VIP.
      */
     private double aplicarDescuentoClienteVip(double importeBase, boolean esClienteVip) {
         if (esClienteVip) {
@@ -45,7 +44,7 @@ private static final double DESC_CLIENTE_ESTANDAR = 0.05; // Descuento cliente e
     }
 
     /**
-     * Aplica el descuento correspondiente para clientes estándar.
+     * Aplica el descuento correspondiente para los clientes estándar.
      */
     private double aplicarDescuentoClienteEstandar(double importeBase) {
         return importeBase * (1 - DESC_CLIENTE_ESTANDAR);
