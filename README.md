@@ -1,5 +1,21 @@
 # **Práctica: Limpieza de Primavera (Refactorización)**
-# 6\. Uso de la IA
+
+### **1\. Diagnóstico de Deuda Técnica**
+
+Se han identificado tres antipatrones principales que comprometen la calidad del código actual:
+
+* **Valores Mágicos:** El uso de literales numéricos sin contexto (como 0.25 y 0.15) dificulta la comprensión de los mismos.  
+* **Variables sin significado:** Identificadores como dV, m y tC carecen de significado, rompiendo el principio de que el código debe revelar su intención. Esto aumenta drásticamente la carga cognitiva para los desarrolladores.  
+* **Código Spaghetti:** El anidamiento excesivo de estructuras de control (if-else) genera un flujo de ejecución difícil de seguir, incrementando la probabilidad de introducir errores en futuros despliegues.
+
+### **3\. Impacto y Beneficios de la Mejora**
+
+1. **Aplanamiento de la Lógica :** La sustitución de bloques anidados por **cláusulas de guarda** reduce la complejidad ciclomática. El código ahora se ejecuta de manera secuencial, simplificando la depuración y la escritura de pruebas unitarias.  
+2. **Nomenclatura Explícita:** Las variables m, dV y tC han sido refactorizadas a monto\_base, es\_cliente\_vip y tipo\_cliente respectivamente, documentando el comportamiento del sistema de forma intrínseca.  
+3. **Desacoplamiento de Valores Hardcodeados:** Al extraer los descuentos y el IVA a constantes descriptivas al inicio del módulo, se establece un contrato claro con FacturacionLegacy. Cualquier cambio en la política fiscal o comercial ahora requiere la modificación de una única línea de código.  
+4. **Tipado Estricto :** La inclusión de firmas de tipo (float, bool, str) garantiza un mejor análisis estático del código y minimiza errores en tiempo de ejecución.
+
+### 6\. Uso de la IA
 
 | \# 1 |  |
 | ----- | :---- |
