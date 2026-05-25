@@ -1,6 +1,3 @@
-Aquí tienes todo el documento estructurado y listo en formato Markdown (.md). He organizado el contenido dentro de un bloque de código para que puedas copiarlo íntegramente con un solo clic y pegarlo en tu archivo README.md.
-
-Markdown
 # **Práctica: Limpieza de Primavera (Refactorización y Deuda Técnica)**
 
 ---
