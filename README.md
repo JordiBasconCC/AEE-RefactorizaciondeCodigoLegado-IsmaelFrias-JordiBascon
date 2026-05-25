@@ -32,7 +32,7 @@ La reingeniería aplicada mitiga la deuda técnica acumulada y dota al sistema d
 
 ---
 
-## **4. Estrategia de Aseguramiento de la Calidad (QA)**
+## **4. Estrategia de Aseguramiento de la Calidad **
 
 Para garantizar que el proceso de refactorización no alterase el comportamiento funcional histórico del sistema, se implementó un arnés de pruebas automatizadas utilizando JUnit 5. 
 
