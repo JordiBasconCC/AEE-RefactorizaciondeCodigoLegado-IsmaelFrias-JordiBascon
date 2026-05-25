@@ -1,4 +1,4 @@
-# **Práctica: Limpieza de Primavera (Refactorización y Deuda Técnica)**
+# **Práctica: Limpieza de Primavera**
 
 ---
 
