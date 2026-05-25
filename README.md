@@ -4,11 +4,11 @@
 
 ## **1. Diagnóstico de Deuda Técnica**
 
-Tras una revisión exhaustiva del módulo de facturación heredado (`FacturacionLegacy`), se identificaron tres antipatrones de diseño de software que comprometían la mantenibilidad, escalabilidad y legibilidad del sistema:
+Tras una revisión exhaustiva del módulo de facturación heredado, se identificaron tres antipatrones de diseño de software que comprometían la mantenibilidad, escalabilidad y legibilidad del sistema:
 
-* **Valores Mágicos (Magic Numbers):** El uso de literales numéricos directos (`0.25`, `0.15` y `0.05`) introducía una preocupante falta de contexto operativo. Al no estar declarados de forma explícita, cualquier modificación futura en las políticas fiscales o comerciales incrementaba el riesgo de inconsistencias lógicas.
-* **Variables sin Significado (Nomenclatura Ofuscada):** Identificadores crípticos como `dV`, `m` y `tC` violaban el principio de código auto-documentado. Esta opacidad semántica obligaba a los desarrolladores a deducir el propósito de las variables, elevando drásticamente la carga cognitiva y ralentizando los procesos de mantenimiento.
-* **Código Spaghetti (Estructuras Anidadas Complejas):** El flujo original dependía de un anidamiento excesivo de estructuras de control (`if-else`). Esta arquitectura piramidal elevaba de forma innecesaria la complejidad ciclomática, transformando el seguimiento de los caminos lógicos en una tarea propensa a errores de regresión.
+* **Valores Mágicos:** El uso de literales numéricos directos introducía una gran falta de contexto operativo. Al no estar declarados de forma explícita, cualquier modificación futura en las políticas fiscales o comerciales incrementaba el riesgo de inconsistencias lógicas.
+* **Variables sin Significado:** Identificadores crípticos como `dV`, `m` y `tC` violaban el principio de código auto-documentado. Esta opacidad semántica obligaba a los desarrolladores a deducir el propósito de las variables, elevando drásticamente la carga cognitiva y ralentizando los procesos de mantenimiento.
+* **Código Spaghetti:** El flujo original dependía de un anidamiento excesivo de estructuras de control. Esta arquitectura piramidal elevaba de forma innecesaria la complejidad ciclomática, transformando el seguimiento de los caminos lógicos en una tarea propensa a errores de regresión.
 
 ---
 
@@ -25,16 +25,16 @@ La intervención sobre el código fuente se planteó bajo los siguientes estánd
 
 La reingeniería aplicada mitiga la deuda técnica acumulada y dota al sistema de las siguientes ventajas competitivas:
 
-1.  **Aplanamiento de la Lógica mediante Cláusulas de Guarda:** La sustitución de bloques `if-else` condicionales por retornos tempranos (`early returns`) permite aislar las excepciones y flujos alternativos en las primeras líneas del método. El código ahora se ejecuta de manera estrictamente secuencial, simplificando la depuración y facilitando la cobertura de pruebas.
+1.  **Aplanamiento de la Lógica mediante Cláusulas de Guarda:** La sustitución de bloques `if-else` condicionales por retornos tempranos permite aislar las excepciones y flujos alternativos en las primeras líneas del método. El código ahora se ejecuta de manera estrictamente secuencial, simplificando la depuración y facilitando la cobertura de pruebas.
 2.  **Nomenclatura Explícita y Ubicua:** Las variables ambiguas fueron refactorizadas a `importeBase`, `tipoCliente` y `esClienteVip`. Esta actualización introduce documentación intrínseca, alineando el código fuente con el lenguaje del dominio de negocio.
-3.  **Desacoplamiento de Valores Hardcodeados:** Al extraer los porcentajes de descuento a constantes descriptivas (`private static final double`) en la cabecera del módulo, se centraliza la configuración de las reglas de negocio. Cualquier cambio comercial posterior requerirá la modificación de una única línea de código.
-4.  **Tipado Estricto de Java:** Se ha garantizado la coherencia del tipado fuerte nativo (`double`, `int`, `boolean`), permitiendo un análisis estático robusto a través de herramientas de integración continua (CI) y previniendo anomalías de datos en tiempo de ejecución.
+3.  **Desacoplamiento de Valores Hardcodeados:** Al extraer los porcentajes de descuento a constantes descriptivas en la cabecera del módulo, se centraliza la configuración de las reglas de negocio. Cualquier cambio comercial posterior requerirá la modificación de una única línea de código.
+4.  **Tipado Estricto de Java:** Se ha garantizado la coherencia del tipado fuerte nativo, permitiendo un análisis estático robusto a través de herramientas de integración continua (CI) y previniendo anomalías de datos en tiempo de ejecución.
 
 ---
 
 ## **4. Estrategia de Aseguramiento de la Calidad (QA)**
 
-Para garantizar que el proceso de refactorización no alterase el comportamiento funcional histórico del sistema, se implementó un arnés de pruebas automatizadas utilizando **JUnit 5**. 
+Para garantizar que el proceso de refactorización no alterase el comportamiento funcional histórico del sistema, se implementó un arnés de pruebas automatizadas utilizando JUnit 5. 
 
 La batería de pruebas diseñada valida de forma exhaustiva el 100% de los escenarios lógicos:
 * **Validación de Límites:** Verificación de importes negativos o iguales a cero.
