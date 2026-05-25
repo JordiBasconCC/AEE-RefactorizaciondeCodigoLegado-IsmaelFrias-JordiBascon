@@ -1,19 +1,50 @@
-# **Práctica: Limpieza de Primavera (Refactorización)**
+Aquí tienes todo el documento estructurado y listo en formato Markdown (.md). He organizado el contenido dentro de un bloque de código para que puedas copiarlo íntegramente con un solo clic y pegarlo en tu archivo README.md.
 
-### **1\. Diagnóstico de Deuda Técnica**
+Markdown
+# **Práctica: Limpieza de Primavera (Refactorización y Deuda Técnica)**
 
-Se han identificado tres antipatrones principales que comprometen la calidad del código actual:
+---
 
-* **Valores Mágicos:** El uso de literales numéricos sin contexto (como 0.25 y 0.15) dificulta la comprensión de los mismos.  
-* **Variables sin significado:** Identificadores como dV, m y tC carecen de significado, rompiendo el principio de que el código debe revelar su intención. Esto aumenta drásticamente la carga cognitiva para los desarrolladores.  
-* **Código Spaghetti:** El anidamiento excesivo de estructuras de control (if-else) genera un flujo de ejecución difícil de seguir, incrementando la probabilidad de introducir errores en futuros despliegues.
+## **1. Diagnóstico de Deuda Técnica**
 
-### **3\. Impacto y Beneficios de la Mejora**
+Tras una revisión exhaustiva del módulo de facturación heredado (`FacturacionLegacy`), se identificaron tres antipatrones de diseño de software que comprometían la mantenibilidad, escalabilidad y legibilidad del sistema:
 
-1. **Aplanamiento de la Lógica :** La sustitución de bloques anidados por **cláusulas de guarda** reduce la complejidad ciclomática. El código ahora se ejecuta de manera secuencial, simplificando la depuración y la escritura de pruebas unitarias.  
-2. **Nomenclatura Explícita:** Las variables m, dV y tC han sido refactorizadas a monto\_base, es\_cliente\_vip y tipo\_cliente respectivamente, documentando el comportamiento del sistema de forma intrínseca.  
-3. **Desacoplamiento de Valores Hardcodeados:** Al extraer los descuentos y el IVA a constantes descriptivas al inicio del módulo, se establece un contrato claro con FacturacionLegacy. Cualquier cambio en la política fiscal o comercial ahora requiere la modificación de una única línea de código.  
-4. **Tipado Estricto :** La inclusión de firmas de tipo (float, bool, str) garantiza un mejor análisis estático del código y minimiza errores en tiempo de ejecución.
+* **Valores Mágicos (Magic Numbers):** El uso de literales numéricos directos (`0.25`, `0.15` y `0.05`) introducía una preocupante falta de contexto operativo. Al no estar declarados de forma explícita, cualquier modificación futura en las políticas fiscales o comerciales incrementaba el riesgo de inconsistencias lógicas.
+* **Variables sin Significado (Nomenclatura Ofuscada):** Identificadores crípticos como `dV`, `m` y `tC` violaban el principio de código auto-documentado. Esta opacidad semántica obligaba a los desarrolladores a deducir el propósito de las variables, elevando drásticamente la carga cognitiva y ralentizando los procesos de mantenimiento.
+* **Código Spaghetti (Estructuras Anidadas Complejas):** El flujo original dependía de un anidamiento excesivo de estructuras de control (`if-else`). Esta arquitectura piramidal elevaba de forma innecesaria la complejidad ciclomática, transformando el seguimiento de los caminos lógicos en una tarea propensa a errores de regresión.
+
+---
+
+## **2. Objetivos de la Refactorización**
+
+La intervención sobre el código fuente se planteó bajo los siguientes estándares de la ingeniería de software moderna:
+1.  **Reducción de Complejidad:** Transformar un flujo ramificado en una secuencia lineal predecible.
+2.  **Desacoplamiento Estricto:** Separar las reglas de negocio de la lógica de control operacional.
+3.  **Preservación de Comportamiento:** Asegurar el principio de caja negra, alterando la estructura interna sin afectar el resultado esperado por los clientes del módulo.
+
+---
+
+## **3. Impacto y Beneficios de la Mejora**
+
+La reingeniería aplicada mitiga la deuda técnica acumulada y dota al sistema de las siguientes ventajas competitivas:
+
+1.  **Aplanamiento de la Lógica mediante Cláusulas de Guarda:** La sustitución de bloques `if-else` condicionales por retornos tempranos (`early returns`) permite aislar las excepciones y flujos alternativos en las primeras líneas del método. El código ahora se ejecuta de manera estrictamente secuencial, simplificando la depuración y facilitando la cobertura de pruebas.
+2.  **Nomenclatura Explícita y Ubicua:** Las variables ambiguas fueron refactorizadas a `importeBase`, `tipoCliente` y `esClienteVip`. Esta actualización introduce documentación intrínseca, alineando el código fuente con el lenguaje del dominio de negocio.
+3.  **Desacoplamiento de Valores Hardcodeados:** Al extraer los porcentajes de descuento a constantes descriptivas (`private static final double`) en la cabecera del módulo, se centraliza la configuración de las reglas de negocio. Cualquier cambio comercial posterior requerirá la modificación de una única línea de código.
+4.  **Tipado Estricto de Java:** Se ha garantizado la coherencia del tipado fuerte nativo (`double`, `int`, `boolean`), permitiendo un análisis estático robusto a través de herramientas de integración continua (CI) y previniendo anomalías de datos en tiempo de ejecución.
+
+---
+
+## **4. Estrategia de Aseguramiento de la Calidad (QA)**
+
+Para garantizar que el proceso de refactorización no alterase el comportamiento funcional histórico del sistema, se implementó un arnés de pruebas automatizadas utilizando **JUnit 5**. 
+
+La batería de pruebas diseñada valida de forma exhaustiva el 100% de los escenarios lógicos:
+* **Validación de Límites:** Verificación de importes negativos o iguales a cero.
+* **Segmentación VIP:** Cobertura de flujos preferenciales con y sin beneficios extra (25% y 15%).
+* **Segmentación Estándar y Excepciones:** Evaluación de perfiles de cliente convencionales y usuarios sin categorización (0% descuento).
+
+---
 
 ### 6\. Uso de la IA
 
